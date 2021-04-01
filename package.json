@@ -1,5 +1,5 @@
 {
-    "name": "com.agraris.Toast",
+    "name": "com.agraris.toast",
     "version": "1.0.0",
     "displayName": "Agraris Toast",
     "description": "Easy implementation of Toast on Android for Unity.",
