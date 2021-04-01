@@ -1,14 +1,17 @@
 {
-    "name": "Agraris.Toast",
+    "name": "Agraris.Tools.Toast",
     "rootNamespace": "",
     "references": [],
     "includePlatforms": [
-        "Android"
+        "Android",
+        "Editor"
     ],
     "excludePlatforms": [],
     "allowUnsafeCode": false,
     "overrideReferences": false,
-    "precompiledReferences": [],
+    "precompiledReferences": [
+        ""
+    ],
     "autoReferenced": true,
     "defineConstraints": [],
     "versionDefines": [],
