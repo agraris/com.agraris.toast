@@ -2,9 +2,16 @@ using UnityEngine;
 
 namespace Agraris.Tools
 {
+    public enum ToastLength
+    {
+        LENGTH_SHORT, LENGTH_LONG
+    }
+
     public static class Toast
     {
         static string m_ToastMessage;
+        static ToastLength m_ToastLength;
+
         static AndroidJavaClass m_UnityPlayer;
         static AndroidJavaClass unityPlayer
         {
@@ -19,8 +26,14 @@ namespace Agraris.Tools
 
         public static void ShowToast(string message)
         {
-#if UNITY_ANDROID
+            ShowToast(message, ToastLength.LENGTH_SHORT);
+        }
+
+        public static void ShowToast(string message, ToastLength length)
+        {
+#if UNITY_ANDROID && !UNITY_EDITOR
             m_ToastMessage = message;
+            m_ToastLength = length;
             var activity = unityPlayer.GetStatic<AndroidJavaObject>("currentActivity");
             activity.Call("runOnUiThread", new AndroidJavaRunnable(ShowToast));
 #endif
@@ -33,7 +46,7 @@ namespace Agraris.Tools
             var context = activity.Call<AndroidJavaObject>("getApplicationContext");
             AndroidJavaClass theToast = new AndroidJavaClass("android.widget.Toast");
             AndroidJavaObject mString = new AndroidJavaObject("java.lang.String", m_ToastMessage);
-            AndroidJavaObject toast = theToast.CallStatic<AndroidJavaObject>("makeText", context, mString, theToast.GetStatic<int>("LENGTH_SHORT"));
+            AndroidJavaObject toast = theToast.CallStatic<AndroidJavaObject>("makeText", context, mString, theToast.GetStatic<int>(m_ToastLength.ToString()));
             toast.Call("show");
         }
 #endif
